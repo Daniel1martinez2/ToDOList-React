@@ -2,7 +2,9 @@ import React, {useReducer} from 'react';
 import TaskContext from './task-context';
 const ACTIONS = {
   NEW_TASK: 'new-task',
-  EDIT_TASK_TITLE: 'edit-text'
+  EDIT_TASK_TITLE: 'edit-text',
+  SET_TASK_STATE: 'set-state-task',
+  DELETE_TASK: 'delete-task',
 }
 const defaultState = {
   list: [],
@@ -16,7 +18,6 @@ const taskReducerCentral = (currentState, action) =>{
         filter: currentState.filter,
       }
     case ACTIONS.EDIT_TASK_TITLE:
-      
       return {
         list: currentState.list.map( task => {
           if(task.id === action.payLoad.id){
@@ -26,6 +27,22 @@ const taskReducerCentral = (currentState, action) =>{
         }),
         filter: currentState.filter,
       }
+    case ACTIONS.SET_TASK_STATE: 
+      return{
+        list: currentState.list.map( task => {
+          if(task.id === action.payLoad.id){
+            return {...task, state: task.state === 'completed' ? 'active' : 'completed'}
+          }
+          return task; 
+        }),
+        filter: currentState.filter,
+      }
+      case ACTIONS.DELETE_TASK:
+        return{
+          list: currentState.list.filter(task => task.id !== action.payLoad.id),
+          filter: currentState.filter,
+      }
+      
     default:
       return defaultState; 
   }
@@ -33,6 +50,15 @@ const taskReducerCentral = (currentState, action) =>{
 const TaskProvider = props => {
   const handleNewTask = (task) => {
     dispatchTask({type: ACTIONS.NEW_TASK, payLoad:{task: task}})
+  }
+  const handleTaskValue = (id, text) => {
+    dispatchTask({type: ACTIONS.EDIT_TASK_TITLE, payLoad:{id: id, text: text}}); 
+  }
+  const handleTaskState = (id) => {
+    dispatchTask({type: ACTIONS.SET_TASK_STATE, payLoad:{id: id}})
+  }
+  const handleDeleteTask = (id) => {
+    dispatchTask({type: ACTIONS.DELETE_TASK, payLoad:{id: id}})
   }
   const handleFilterAll = () => {
 
@@ -43,11 +69,7 @@ const TaskProvider = props => {
   const handleFilterCompleted = () => {
 
   }
-  const handleTaskValue = (id, text) => {
-    dispatchTask({type: ACTIONS.EDIT_TASK_TITLE, payLoad:{id: id, text: text}}); 
-    console.log(taskListState.list);
 
-  }
 
   const [taskListState, dispatchTask] = useReducer(taskReducerCentral,defaultState)
   const taskContextData = {
@@ -57,9 +79,9 @@ const TaskProvider = props => {
     // filterAll: () => {},
     // filterActive: () => {},
     // filterCompleted: () => {},
-    // setTaskState: (id) => {},
+    setTaskState: handleTaskState,
     setTaskValue: handleTaskValue,
-    // deleteTask: (id) => {},
+    deleteTask: handleDeleteTask,
     // selectAll: () => {}
   }
   return (
