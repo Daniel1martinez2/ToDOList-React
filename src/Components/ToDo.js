@@ -2,12 +2,15 @@ import classes from './ToDo.module.css';
 import NewTask from './NewTask'; 
 import TaskList from './TaskList'; 
 import Filters from './Filters';
+import TaskProvider from '../store/TaskProvider';
 const ToDo = props => {
   return (
     <main className={classes.todo}>
-      <NewTask />
-      <TaskList />
-      <Filters />
+      <TaskProvider>
+        <NewTask />
+        <TaskList />
+        <Filters />
+      </TaskProvider>
     </main>
   ); 
 }

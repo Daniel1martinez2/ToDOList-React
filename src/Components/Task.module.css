@@ -11,10 +11,11 @@
   align-items: center;
   cursor: pointer;
 }
-.task__title{
+.task__title--completed{
   text-decoration:line-through; 
   color: rgb(145, 251, 175) !important;
 }
+
 .task__check{
   color: rgb(145, 251, 175) !important;
 }

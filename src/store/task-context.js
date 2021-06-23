@@ -1,6 +1,8 @@
 import React from 'react';
 const TaskContext = React.createContext({
   list: [],
+  filter: 'all',
+  addTask: (task)=>{},
   filterAll: () => {},
   filterActive: () => {},
   filterCompleted: () => {},
