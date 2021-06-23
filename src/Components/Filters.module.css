@@ -1,0 +1,42 @@
+.actions{
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1em;
+  border-top: 1px solid white;
+  padding-top: .5em;
+}
+.actions__summary{
+  color:rgb(99,92,246);;
+}
+.actions__btn{
+  cursor: pointer;
+  background: none repeat scroll 0 0 transparent;
+  background-color: rgb(99,92,246);
+  border: medium none;
+  border-spacing: 0;
+  border-radius: 3px;
+  color: white;
+  font-size: 13px;
+  font-weight: normal;
+  line-height: 1.42rem;
+  list-style: none outside none;
+  margin-left: 1em;
+  padding:  0 .5em ;
+  text-align: left;
+  text-decoration: none;
+  text-indent: 0;
+}
+.total{
+  color: white;
+}
+.actions__btn:hover{
+  background-color: rgb(86, 79, 213);
+}
+.actions__btn--active{
+  color: rgb(86, 79, 213);
+  background-color:white;
+}
+.actions__btn--active:hover{
+  color: rgb(86, 79, 213);
+  background-color:white;
+}

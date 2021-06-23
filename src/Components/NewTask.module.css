@@ -1,0 +1,28 @@
+.todo__form{
+  width: 100%;    
+  display: flex;
+}
+.todo__input{
+  width: 100%;    
+  border: none;
+  outline: none;
+  border-radius:3px ; 
+  padding-left: 1em;
+  color: rgb(154, 154, 154);
+}
+
+.select-all{
+  background: none repeat scroll 0 0 transparent;
+  border: medium none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 1em;
+  pad: 0;
+  cursor: pointer;
+}
+.select-all svg{
+  color: white;
+  height: 100%;
+  width: auto;
+}
