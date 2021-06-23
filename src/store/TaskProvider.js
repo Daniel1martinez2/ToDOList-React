@@ -5,6 +5,9 @@ const ACTIONS = {
   EDIT_TASK_TITLE: 'edit-text',
   SET_TASK_STATE: 'set-state-task',
   DELETE_TASK: 'delete-task',
+  FILTER_ALL: 'filter-all',
+  FILTER_ACTIVE: 'filter-active',
+  FILTER_COMPLETED: 'filter-completed',
 }
 const defaultState = {
   list: [],
@@ -43,6 +46,24 @@ const taskReducerCentral = (currentState, action) =>{
           filter: currentState.filter,
       }
       
+      case ACTIONS.FILTER_ALL:
+        return{
+          list: currentState.list,
+          filter: 'all'
+        }
+      
+      case ACTIONS.FILTER_ACTIVE:
+        return{
+          list: currentState.list,
+          filter: 'active'
+        }
+      
+      case ACTIONS.FILTER_COMPLETED:
+        return{
+          list: currentState.list,
+          filter: 'completed'
+        }
+
     default:
       return defaultState; 
   }
@@ -61,24 +82,24 @@ const TaskProvider = props => {
     dispatchTask({type: ACTIONS.DELETE_TASK, payLoad:{id: id}})
   }
   const handleFilterAll = () => {
-
+    dispatchTask({type: ACTIONS.FILTER_ALL})
   }
   const handleFilterActive = () => {
-
+    dispatchTask({type: ACTIONS.FILTER_ACTIVE})
   }
   const handleFilterCompleted = () => {
-
+    dispatchTask({type: ACTIONS.FILTER_COMPLETED})
   }
 
 
   const [taskListState, dispatchTask] = useReducer(taskReducerCentral,defaultState)
   const taskContextData = {
     list: taskListState.list,
-    filter: 'all',
+    filter: taskListState.filter,
     addTask: handleNewTask,
-    // filterAll: () => {},
-    // filterActive: () => {},
-    // filterCompleted: () => {},
+    filterAll: handleFilterAll,
+    filterActive: handleFilterActive,
+    filterCompleted: handleFilterCompleted,
     setTaskState: handleTaskState,
     setTaskValue: handleTaskValue,
     deleteTask: handleDeleteTask,

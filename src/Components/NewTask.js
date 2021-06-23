@@ -3,7 +3,6 @@ import TaskContext from '../store/task-context';
 import classes from './NewTask.module.css'; 
 const NewTask = props => {
   const taskCtx = useContext(TaskContext);
-  //console.log(taskCtx.list);
   const [inputValue, setInputValue] = useState(''); 
   const handleInputText = (event) => {
     setInputValue(event.target.value); 
