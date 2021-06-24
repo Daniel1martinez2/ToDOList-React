@@ -8,6 +8,7 @@ const ACTIONS = {
   FILTER_ALL: 'filter-all',
   FILTER_ACTIVE: 'filter-active',
   FILTER_COMPLETED: 'filter-completed',
+  SELECT_ALL: 'select-all',
 }
 const defaultState = {
   list: [],
@@ -63,6 +64,40 @@ const taskReducerCentral = (currentState, action) =>{
           list: currentState.list,
           filter: 'completed'
         }
+      case ACTIONS.SELECT_ALL: 
+
+        let currentFilterArray; 
+
+        switch (currentState.filter){
+          case 'active':   
+            currentFilterArray = currentState.list.map(i => {
+              if(i.state === 'active'){
+                return {...i, state: 'completed'}
+              }
+              return i; 
+            });
+          break;
+          case 'completed':   
+            currentFilterArray = currentState.list.map(i => {
+              if(i.state === 'completed'){
+                return {...i, state: 'active'}
+              }
+              return i; 
+            });
+          break;
+          default: currentFilterArray =  currentState.list.every(listItem => listItem.state === 'completed' ) ? 
+            currentState.list.map(item => {
+              return { ...item, state: 'active'}
+            }) 
+            : 
+            currentState.list.map(item => {
+              return { ...item, state: 'completed'}
+            }); 
+        }
+        return{
+          list: currentFilterArray,
+          filter: currentState.filter,    
+        }
 
     default:
       return defaultState; 
@@ -90,7 +125,11 @@ const TaskProvider = props => {
   const handleFilterCompleted = () => {
     dispatchTask({type: ACTIONS.FILTER_COMPLETED})
   }
+  const handleSelectAll = () => {
+    console.log('a');
+    dispatchTask({type: ACTIONS.SELECT_ALL})
 
+  }
 
   const [taskListState, dispatchTask] = useReducer(taskReducerCentral,defaultState)
   const taskContextData = {
@@ -103,7 +142,7 @@ const TaskProvider = props => {
     setTaskState: handleTaskState,
     setTaskValue: handleTaskValue,
     deleteTask: handleDeleteTask,
-    // selectAll: () => {}
+    selectAll: handleSelectAll,
   }
   return (
     <TaskContext.Provider value={taskContextData}>
